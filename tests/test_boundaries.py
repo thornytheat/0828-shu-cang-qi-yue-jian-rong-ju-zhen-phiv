@@ -2,7 +2,7 @@ BOUNDARIES = [('0001', 3, {'data_type': 3}, 'BREAKING_SCHEMA', 1), ('0001', 5, {
 
 """改变来源样例的业务边界，核对复核状态和具体数值。"""
 from io import StringIO
-from csv import DictReader, reader, writer
+from csv import reader, writer
 
 from app.modules.pipeline import run
 

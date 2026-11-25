@@ -1,6 +1,7 @@
 import {request} from './client.js';
 import {snapshot, history} from './view.js';
 import {visualize} from './plots.js';
+import {renderSupplements} from './supplements.js';
 
 const form = document.querySelector('#source');
 const file = document.querySelector('#file');
@@ -33,9 +34,14 @@ function draw() {
   detail.hidden = !batch;
   if (batch) {
     document.querySelector('#run-status').textContent = `${batch.id.slice(0,10)} · ${batch.status} · r${batch.revision}`;
-    detail.querySelector('[value="APPROVED"]').disabled = !report.balance.releasable || batch.status==='APPROVED';
-    detail.querySelector('[value="HELD"]').disabled = batch.status==='APPROVED';
+    const finalized = batch.status === 'APPROVED' || batch.status === 'CLOSED';
+    detail.querySelector('[value="APPROVED"]').disabled = !report.balance.releasable || finalized;
+    detail.querySelector('[value="CLOSED"]').disabled = finalized || !report.balance.balanced;
+    detail.querySelector('[value="HELD"]').disabled = finalized;
     evidence.href = `/api/runs/${batch.id}/evidence`;
+    renderSupplements(batch, batch.adjustment);
+  } else {
+    renderSupplements(null, null);
   }
 }
 
@@ -100,7 +106,9 @@ detail.addEventListener('submit',event=>{
   perform(async()=>{
     const payload={status:event.submitter.value,revision:batch.revision,note:detail.elements.note.value};
     const result=await request(`/api/runs/${batch.id}`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    show(result,true); announce(result.status==='APPROVED'?'批次已签发':'批次已暂缓'); await refresh();
+    show(result,true);
+    announce(result.status==='APPROVED'?'批次已签发':result.status==='CLOSED'?'批次已交账，可登记补证':'批次已暂缓');
+    await refresh();
   });
 });
 preview(stage);

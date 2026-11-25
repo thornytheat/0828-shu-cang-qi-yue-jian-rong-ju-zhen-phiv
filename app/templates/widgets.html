@@ -37,9 +37,35 @@
   <form id="review" hidden>
     <p id="run-status"></p><label for="note">复核意见</label>
     <textarea id="note" name="note" minlength="3" maxlength="200" required></textarea>
-    <div class="review-actions"><button name="decision" value="HELD">暂缓</button><button class="action" name="decision" value="APPROVED">签发</button></div>
+    <div class="review-actions">
+      <button name="decision" value="HELD">暂缓</button>
+      <button name="decision" value="CLOSED">交账</button>
+      <button class="action" name="decision" value="APPROVED">签发</button>
+    </div>
     <a id="evidence">下载复核证据</a>
   </form>
+  <section id="supplements" hidden>
+    <h2>交账后补证</h2>
+    <p id="adjust-summary" class="chart-note"></p>
+    <div class="scroll"><table id="supplement-rows" aria-label="冲突记录补证"></table></div>
+    <form id="supplement-form" hidden>
+      <p id="supplement-target"></p>
+      <label><input type="radio" name="action" value="DENY" checked> 只否认一份定义（记录仍隔离）</label>
+      <label><input type="radio" name="action" value="CORRECT"> 给出正确定义（恢复采信并重算）</label>
+      <fieldset id="definition-fields" hidden>
+        <legend>正确字段定义</legend>
+        <label>field <input name="field" inputmode="numeric" required></label>
+        <label>data_type <input name="data_type" inputmode="numeric" required></label>
+        <label>scale <input name="scale" inputmode="numeric" required></label>
+        <label>nullable <input name="nullable" inputmode="numeric" required></label>
+        <label>has_default <input name="has_default" inputmode="numeric" required></label>
+      </fieldset>
+      <label for="supplement-note">补证说明（3-200 字）</label>
+      <textarea id="supplement-note" name="note" minlength="3" maxlength="200" required></textarea>
+      <div class="review-actions"><button type="submit" class="action">登记补证</button></div>
+    </form>
+    <a id="adjusted-evidence" hidden>下载补证重算证据</a>
+  </section>
 </aside>
 {% endmacro %}
 {% macro status() %}

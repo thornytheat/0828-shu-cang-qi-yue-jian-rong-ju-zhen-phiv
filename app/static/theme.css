@@ -69,3 +69,12 @@ body.contract {margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 var(
 .field-chips{display:grid;gap:6px;margin:8px 0;overflow-wrap:anywhere}.field-chip{border:1px dashed var(--accent);padding:7px;border-radius:var(--radius);color:var(--accent);font-family:var(--font-num)}
 
 .chart-note{margin-top:9px;color:var(--muted);overflow-wrap:anywhere}
+#supplements{margin-top:14px}
+#supplements label{display:block;margin:6px 0;overflow-wrap:anywhere}
+#supplements fieldset{border:1px solid var(--line);border-radius:var(--radius);margin:8px 0;padding:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+#supplements fieldset input{width:100%;margin-top:4px;background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:.35em .5em;color:inherit;font-family:var(--font-num)}
+#supplements table{min-width:0;font-size:.92em}
+#supplements th,#supplements td{white-space:normal;height:auto;padding:7px 8px}
+.badge[data-result="CLOSED"],.badge[data-result="RESTORED"],.badge[data-result="READY"]{color:var(--accent)}
+.badge[data-result="DENIED"],.badge[data-result="WITHDRAWN"],.badge[data-result="OPEN"]{color:var(--fault)}
+#adjusted-evidence{display:inline-block;margin-top:10px}
